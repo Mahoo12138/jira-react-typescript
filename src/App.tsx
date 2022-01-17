@@ -1,12 +1,16 @@
+import { AuthenticateApp } from "auth-app";
+import { useAuth } from "context/auth-context";
+import { UnAuthenticateApp } from "pages/unauth-app";
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import { ProjectListPage } from "./pages/project-list";
 
 function App() {
+  const { user } = useAuth();
   return (
     <div className="App">
-      <ProjectListPage />
+      {/* <ProjectListPage /> */}
+      {user ? <AuthenticateApp /> : <UnAuthenticateApp />}
     </div>
   );
 }
