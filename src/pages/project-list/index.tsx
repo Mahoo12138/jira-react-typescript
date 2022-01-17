@@ -7,7 +7,7 @@ import { cleanObject, useDebounce, useMount } from "../../utils";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export const ProjectListPage = () => {
-  console.log("component start");
+  // console.log("component start");
   const [param, setParam] = useState({
     name: "",
     personId: "",
@@ -23,44 +23,38 @@ export const ProjectListPage = () => {
   //   })
   // }, [])  // 只触发一次
   useMount(() => {
-    console.log("users data start");
+    // console.log("users data start");
     fetch(`${apiUrl}/users`).then(async (response) => {
       if (response.ok) {
-        console.log("setUsers start");
+        // console.log("setUsers start");
         setUsers(await response.json());
-        console.log("setUsers over");
+        // console.log("setUsers over");
       }
     });
-    console.log("users data over");
+    // console.log("users data over");
   });
 
-  const debouncedParam = useDebounce(param, 3000);
+  const debouncedParam = useDebounce(param, 300);
 
   useEffect(() => {
-    console.log("project data start");
+    // console.log("project data start");
     fetch(
       `${apiUrl}/projects?${qs.stringify(cleanObject(debouncedParam))}`
     ).then(async (response) => {
       if (response.ok) {
-        console.log("setList start");
+        // console.log("setList start");
         setList(await response.json());
-        console.log("setList over");
-
+        // console.log("setList over");
       }
     });
-    console.log("project data over");
+    // console.log("project data over");
   }, [debouncedParam]);
 
-  console.log("component over");
+  // console.log("component over");
   return (
     <div>
-      <SearchPanel
-        param={param}
-        setParam={setParam}
-        users={users}
-        setUsers={setUsers}
-      />
-      {console.log("dom ")}
+      <SearchPanel param={param} setParam={setParam} users={users} />
+      {/* {console.log("dom ")} */}
       <List list={list} users={users} />
     </div>
   );
