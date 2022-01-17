@@ -7,7 +7,7 @@ export const UnAuthenticateApp = () => {
 
   return (
     <div>
-      {isLogin ? <LoginPage /> : <RegisterPage />}
+      {isLogin ? <RegisterPage /> : <LoginPage />}
       <button onClick={(e) => setIsLogin(!isLogin)}>切换</button>
     </div>
   );
