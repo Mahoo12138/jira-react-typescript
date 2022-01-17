@@ -24,7 +24,7 @@ export const useMount = (callback: () => void) => {
   // console.log("useMount over")
 };
 
-export const useDebounce = (value: object, delay: number) => {
+export const useDebounce = <V>(value: V, delay: number) => {
   // console.log("useDebounce start", value)
   const [debouncedValue, setDebouncedValue] = useState(value);
 
