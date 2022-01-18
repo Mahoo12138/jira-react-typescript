@@ -1,4 +1,5 @@
 import React from "react";
+import { Input, Select } from "antd";
 
 import { User } from "./list";
 
@@ -13,22 +14,22 @@ interface SearchPanelProps {
 const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
   return (
     <div>
-      <input
+      <Input
         type="text"
         value={param.name}
         onChange={(e) => setParam({ ...param, name: e.target.value })}
-      ></input>
-      <select
+      ></Input>
+      <Select
         value={param.personId}
-        onChange={(e) => setParam({ ...param, personId: e.target.value })}
+        onChange={(value) => setParam({ ...param, personId: value })}
       >
-        <option value={""}>负责人</option>
+        <Select.Option value={""}>负责人</Select.Option>
         {users.map((user) => (
-          <option key={user.id} value={user.id}>
+          <Select.Option key={user.id} value={user.id}>
             {user.name}
-          </option>
+          </Select.Option>
         ))}
-      </select>
+      </Select>
     </div>
   );
 };
