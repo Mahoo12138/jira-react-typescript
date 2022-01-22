@@ -3,6 +3,7 @@ import SearchPanel from "./search-panel";
 import List from "./list";
 import { cleanObject, useDebounce, useMount } from "../../utils";
 import { useHttp } from "utils/http";
+import styled from "@emotion/styled";
 
 export const ProjectListPage = () => {
   // console.log("component start");
@@ -37,10 +38,15 @@ export const ProjectListPage = () => {
 
   // console.log("component over");
   return (
-    <div>
+    <Container>
+      <h1>项目列表</h1>
       <SearchPanel param={param} setParam={setParam} users={users} />
       {/* {console.log("dom ")} */}
       <List list={list} users={users} />
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  padding: 3.2rem;
+`;

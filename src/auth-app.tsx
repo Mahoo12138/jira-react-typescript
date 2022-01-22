@@ -2,20 +2,34 @@ import styled from "@emotion/styled";
 import { Row } from "components/lib";
 import { useAuth } from "context/auth-context";
 import { ProjectListPage } from "pages/project-list";
-
+import { Dropdown, Menu } from "antd";
+// import Logo from "assets/software-logo.svg";
+import { ReactComponent as Logo } from "assets/software-logo.svg";
 export const AuthenticateApp = () => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
 
   return (
     <Container>
-      <Header between={true}>
+      <Header between={true} as={"header"}>
         <HeaderLeft gap={true}>
-          <h2>Left</h2>
-          <h2>Logo</h2>
-          <h2>Pros</h2>
+          {/* <img src={Logo} /> */}
+          <Logo width={"18rem"} color={"rgb(38,132,255)"} />
+          <h3>项目</h3>
+          <h3>用户</h3>
         </HeaderLeft>
         <HeaderRight>
-          <button onClick={logout}>登出</button>
+          {/* <button onClick={logout}>登出</button> */}
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item key={"logout"}>
+                  <a onClick={logout}>登出</a>
+                </Menu.Item>
+              </Menu>
+            }
+          >
+            <a>Hi {user?.name}</a>
+          </Dropdown>
         </HeaderRight>
       </Header>
       {/* <Nav>Nav</Nav> */}
@@ -37,6 +51,9 @@ const Container = styled.div`
 `;
 
 const Header = styled(Row)`
+  padding: 3.2rem;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  z-index: 1;
   /* grid-area: header;
   display: flex;
   flex-direction: row;
