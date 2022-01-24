@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Row } from "components/lib";
 import { useAuth } from "context/auth-context";
 import { ProjectListPage } from "pages/project-list";
-import { Dropdown, Menu } from "antd";
+import { Dropdown, Menu, Button } from "antd";
 // import Logo from "assets/software-logo.svg";
 import { ReactComponent as Logo } from "assets/software-logo.svg";
 export const AuthenticateApp = () => {
@@ -23,12 +23,14 @@ export const AuthenticateApp = () => {
             overlay={
               <Menu>
                 <Menu.Item key={"logout"}>
-                  <a onClick={logout}>登出</a>
+                  <Button type="link" onClick={logout}>
+                    登出
+                  </Button>
                 </Menu.Item>
               </Menu>
             }
           >
-            <a>Hi {user?.name}</a>
+            <Button type="link">Hi {user?.name}</Button>
           </Dropdown>
         </HeaderRight>
       </Header>

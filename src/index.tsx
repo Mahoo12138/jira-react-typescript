@@ -3,15 +3,16 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { loadDevTools } from "jira-dev-tool";
+import { loadServer, DevTools } from "jira-dev-tool";
 // 在 jira 开发工具后引入样式
 import "antd/dist/antd.less";
 import { AppProvider } from "context";
 
-loadDevTools(() => {
+loadServer(() => {
   ReactDOM.render(
     <React.StrictMode>
       <AppProvider>
+        <DevTools />
         <App />
       </AppProvider>
     </React.StrictMode>,

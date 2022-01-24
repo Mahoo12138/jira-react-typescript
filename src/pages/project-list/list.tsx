@@ -1,10 +1,10 @@
-import { Table } from "antd";
+import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
 
-interface Project {
+export interface Project {
   id: number;
   name: string;
-  personId: number;
+  personId: string;
   pin: boolean;
   organization: string;
   created: number;
@@ -15,15 +15,14 @@ export interface User {
   token: string;
 }
 
-interface ListProps {
-  list: Project[];
+interface ListProps extends TableProps<Project> {
   users: User[];
 }
 
-const List = ({ list, users }: ListProps) => {
+const List = ({ users, ...props }: ListProps) => {
   return (
     <Table
-      dataSource={list}
+      rowKey={"id"}
       columns={[
         {
           title: "项目",
@@ -42,8 +41,8 @@ const List = ({ list, users }: ListProps) => {
           render: (value, project) => {
             return (
               <span>
-                {users.find((user) => user.id === project.personId)?.name ||
-                  "未知"}
+                {users.find((user) => user.id === Number(project.personId))
+                  ?.name || "未知"}
               </span>
             );
           },
@@ -64,6 +63,7 @@ const List = ({ list, users }: ListProps) => {
         },
       ]}
       pagination={false}
+      {...props}
     ></Table>
   );
 };
