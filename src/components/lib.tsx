@@ -41,6 +41,10 @@ export const FullPageErrorFallback = ({ error }: { error: Error | null }) => (
     <DevTools />
     <Card>
       <Typography.Text type="danger">{error?.message}</Typography.Text>
+      <br></br>
+      <Typography.Text type="warning">
+        未知错误，请刷新页面后重试！
+      </Typography.Text>
     </Card>
   </FullPage>
 );

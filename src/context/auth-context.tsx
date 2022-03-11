@@ -54,9 +54,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   });
 
   if (isIdel || isLoading) {
+    // 展示加载的 loading 界面
     return <FullPageLoading />;
   }
   if (isError) {
+    // 展示一个全局的错误信息页面
     return <FullPageErrorFallback error={error} />;
   }
   return (

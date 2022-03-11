@@ -7,9 +7,10 @@ import { Dropdown, Menu, Button } from "antd";
 import { ReactComponent as Logo } from "assets/software-logo.svg";
 export const AuthenticateApp = () => {
   const { logout, user } = useAuth();
-
+  const value: any = undefined;
   return (
     <Container>
+      <div>{value.isError}</div>
       <Header between={true} as={"header"}>
         <HeaderLeft gap={true}>
           {/* <img src={Logo} /> */}
