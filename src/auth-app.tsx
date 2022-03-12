@@ -1,16 +1,23 @@
 import styled from "@emotion/styled";
+import { Helmet } from "react-helmet";
 import { Row } from "components/lib";
 import { useAuth } from "context/auth-context";
 import { ProjectListPage } from "pages/project-list";
 import { Dropdown, Menu, Button } from "antd";
 // import Logo from "assets/software-logo.svg";
 import { ReactComponent as Logo } from "assets/software-logo.svg";
+import { useDocumentTitle } from "utils";
 export const AuthenticateApp = () => {
   const { logout, user } = useAuth();
-  const value: any = undefined;
+  // const value: any = undefined;
+
+  useDocumentTitle("项目列表");
   return (
     <Container>
-      <div>{value.isError}</div>
+      <Helmet>
+        <title>项目列表</title>
+      </Helmet>
+      {/* <div>{value.isError}</div> */}
       <Header between={true} as={"header"}>
         <HeaderLeft gap={true}>
           {/* <img src={Logo} /> */}
