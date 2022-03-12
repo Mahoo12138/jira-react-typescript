@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Helmet } from "react-helmet";
+// import { Helmet } from "react-helmet";
 import { Row } from "components/lib";
 import { useAuth } from "context/auth-context";
 import { ProjectListPage } from "pages/project-list";
@@ -7,48 +7,63 @@ import { Dropdown, Menu, Button } from "antd";
 // import Logo from "assets/software-logo.svg";
 import { ReactComponent as Logo } from "assets/software-logo.svg";
 import { useDocumentTitle } from "utils";
+import { Route, Routes } from "react-router";
+import { BrowserRouter as Router } from "react-router-dom";
+import ProjectPage from "pages/project";
 export const AuthenticateApp = () => {
-  const { logout, user } = useAuth();
   // const value: any = undefined;
 
   useDocumentTitle("项目列表");
   return (
     <Container>
-      <Helmet>
+      {/* <Helmet>
         <title>项目列表</title>
-      </Helmet>
+      </Helmet> */}
       {/* <div>{value.isError}</div> */}
-      <Header between={true} as={"header"}>
-        <HeaderLeft gap={true}>
-          {/* <img src={Logo} /> */}
-          <Logo width={"18rem"} color={"rgb(38,132,255)"} />
-          <h3>项目</h3>
-          <h3>用户</h3>
-        </HeaderLeft>
-        <HeaderRight>
-          {/* <button onClick={logout}>登出</button> */}
-          <Dropdown
-            overlay={
-              <Menu>
-                <Menu.Item key={"logout"}>
-                  <Button type="link" onClick={logout}>
-                    登出
-                  </Button>
-                </Menu.Item>
-              </Menu>
-            }
-          >
-            <Button type="link">Hi {user?.name}</Button>
-          </Dropdown>
-        </HeaderRight>
-      </Header>
+      <PageHeader />
       {/* <Nav>Nav</Nav> */}
       <Main>
-        <ProjectListPage />
+        {/* <ProjectListPage /> */}
+        <Router>
+          <Routes>
+            <Route path={"/projects"} element={<ProjectListPage />} />
+            <Route path={"/projects/:projectId/*"} element={<ProjectPage />} />
+          </Routes>
+        </Router>
       </Main>
       {/* <Aside>Aside</Aside> */}
-      <Footer>footer</Footer>
+      {/* <Footer>footer</Footer> */}
     </Container>
+  );
+};
+
+const PageHeader = () => {
+  const { logout, user } = useAuth();
+  return (
+    <Header between={true} as={"header"}>
+      <HeaderLeft gap={true}>
+        {/* <img src={Logo} /> */}
+        <Logo width={"18rem"} color={"rgb(38,132,255)"} />
+        <h3>项目</h3>
+        <h3>用户</h3>
+      </HeaderLeft>
+      <HeaderRight>
+        {/* <button onClick={logout}>登出</button> */}
+        <Dropdown
+          overlay={
+            <Menu>
+              <Menu.Item key={"logout"}>
+                <Button type="link" onClick={logout}>
+                  登出
+                </Button>
+              </Menu.Item>
+            </Menu>
+          }
+        >
+          <Button type="link">Hi {user?.name}</Button>
+        </Dropdown>
+      </HeaderRight>
+    </Header>
   );
 };
 
