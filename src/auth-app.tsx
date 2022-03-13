@@ -6,8 +6,8 @@ import { ProjectListPage } from "pages/project-list";
 import { Dropdown, Menu, Button } from "antd";
 // import Logo from "assets/software-logo.svg";
 import { ReactComponent as Logo } from "assets/software-logo.svg";
-import { useDocumentTitle } from "utils";
-import { Route, Routes } from "react-router";
+import { resetRoute, useDocumentTitle } from "utils";
+import { Navigate, Route, Routes } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import ProjectPage from "pages/project";
 export const AuthenticateApp = () => {
@@ -28,6 +28,7 @@ export const AuthenticateApp = () => {
           <Routes>
             <Route path={"/projects"} element={<ProjectListPage />} />
             <Route path={"/projects/:projectId/*"} element={<ProjectPage />} />
+            <Route path="*" element={<Navigate to={"/projects"} />} />
           </Routes>
         </Router>
       </Main>
@@ -43,7 +44,9 @@ const PageHeader = () => {
     <Header between={true} as={"header"}>
       <HeaderLeft gap={true}>
         {/* <img src={Logo} /> */}
-        <Logo width={"18rem"} color={"rgb(38,132,255)"} />
+        <Button type="link" onClick={resetRoute}>
+          <Logo width={"18rem"} color={"rgb(38,132,255)"} />
+        </Button>
         <h3>项目</h3>
         <h3>用户</h3>
       </HeaderLeft>
