@@ -2,13 +2,11 @@
 import React from "react";
 import { Input, Select, Form } from "antd";
 
-import { User } from "./list";
+import { Project, User } from "./list";
+import { UserSelect } from "components/user-select";
 
 interface SearchPanelProps {
-  param: {
-    name: string;
-    personId: string;
-  };
+  param: Partial<Pick<Project, "name" | "personId">>;
   users: User[];
   setParam: (param: SearchPanelProps["param"]) => void;
 }
@@ -24,18 +22,11 @@ const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
         ></Input>
       </Form.Item>
       <Form.Item>
-        <Select
+        <UserSelect
           value={param.personId}
           onChange={(value) => setParam({ ...param, personId: value })}
-        >
-          <Select.Option value={""}>负责人</Select.Option>
-          {users.map((user) => (
-            // TODO: 字符串与数字的问题
-            <Select.Option key={user.id} value={String(user.id)}>
-              {user.name}
-            </Select.Option>
-          ))}
-        </Select>
+          defaultOptionName={"负责人"}
+        />
       </Form.Item>
     </Form>
   );

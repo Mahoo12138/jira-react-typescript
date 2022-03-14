@@ -2,12 +2,11 @@ import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 
-// TODO: id to number
 export interface Project {
-  // id: number;
-  id: string;
+  id: number;
+  // id: string;
   name: string;
-  personId: string;
+  personId: number;
   pin: boolean;
   organization: string;
   created: number;

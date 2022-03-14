@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "@emotion/styled";
 import { Typography } from "antd";
 import SearchPanel from "./search-panel";
@@ -6,18 +5,12 @@ import List from "./list";
 import { useDebounce } from "../../utils";
 import { useProjects } from "utils/project";
 import { useUsers } from "utils/user";
-import { useUrlQueryParam } from "utils/url";
+import { useProjectQueryParam } from "./utils";
 
 export const ProjectListPage = () => {
-  // const [aa, setParam] = useState({
-  //   name: "",
-  //   personId: "",
-  // });
   // const [keys] = useState<("name" | "personId")[]>(["name","personId"])
-  const [param, setParam] = useUrlQueryParam(["name", "personId"]);
-  const debouncedParam = useDebounce(param, 300);
-
-  const { isLoading, error, data } = useProjects(debouncedParam);
+  const [param, setParam] = useProjectQueryParam();
+  const { isLoading, error, data } = useProjects(useDebounce(param, 300));
   const { data: users } = useUsers();
 
   return (
