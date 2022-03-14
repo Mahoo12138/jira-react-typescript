@@ -6,19 +6,20 @@ import List from "./list";
 import { useDebounce } from "../../utils";
 import { useProjects } from "utils/project";
 import { useUsers } from "utils/user";
+import { useUrlQueryParam } from "utils/url";
 
 export const ProjectListPage = () => {
-  const [param, setParam] = useState({
-    name: "",
-    personId: "",
-  });
-
+  // const [aa, setParam] = useState({
+  //   name: "",
+  //   personId: "",
+  // });
+  // const [keys] = useState<("name" | "personId")[]>(["name","personId"])
+  const [param, setParam] = useUrlQueryParam(["name", "personId"]);
   const debouncedParam = useDebounce(param, 300);
 
   const { isLoading, error, data } = useProjects(debouncedParam);
   const { data: users } = useUsers();
 
-  // console.log("component over");
   return (
     <Container>
       <h1>项目列表</h1>
@@ -31,6 +32,8 @@ export const ProjectListPage = () => {
     </Container>
   );
 };
+
+ProjectListPage.whyDidYouRender = true;
 
 const Container = styled.div`
   padding: 3.2rem;

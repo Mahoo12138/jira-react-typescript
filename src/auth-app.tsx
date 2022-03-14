@@ -44,7 +44,7 @@ const PageHeader = () => {
     <Header between={true} as={"header"}>
       <HeaderLeft gap={true}>
         {/* <img src={Logo} /> */}
-        <Button type="link" onClick={resetRoute}>
+        <Button type="link" onClick={resetRoute} style={{ padding: 0 }}>
           <Logo width={"18rem"} color={"rgb(38,132,255)"} />
         </Button>
         <h3>项目</h3>
