@@ -26,6 +26,10 @@ export const useAsync = <D>(
     ...initialState,
   });
 
+  const [retry, setRetry] = useState(() => () => {
+    console.log("初始化的 retry");
+  });
+
   const setData = (data: D) => {
     setState({
       data,
@@ -42,13 +46,40 @@ export const useAsync = <D>(
     });
   };
 
-  const run = (promise: Promise<D>) => {
+  const run = (
+    promise: Promise<D>,
+    runConfig?: { retry: () => Promise<D> }
+  ) => {
     if (!promise || !promise.then) {
       throw new Error("需要传入 Promise 类型参数");
     }
+    console.log("run 运行 promise");
+    setRetry(() => {
+      console.log("setretry 存储新的promise ");
+      return () => {
+        console.log(promise);
+        console.log("retry 运行");
+        if (runConfig?.retry) {
+          run(runConfig.retry(), runConfig);
+        }
+      };
+    });
+    // const run = (promise: Promise<D>) => {
+    //   if (!promise || !promise.then) {
+    //     throw new Error("需要传入 Promise 类型参数");
+    //   }
+    //   console.log("run 运行 promise")
+    //   setRetry(()=>{
+    //     console.log("setretry 存储新的promise ")
+    //     return ()=>{
+    //       console.log(promise)
+    //       console.log("retry 运行")
+    //       run(promise)}
+    //   })
     setState({ ...state, stat: "loading" });
     return promise
       .then((data) => {
+        console.log("set 数据，页面更新");
         setData(data);
         return data;
       })
@@ -71,6 +102,7 @@ export const useAsync = <D>(
     run,
     setData,
     setError,
+    retry,
     ...state,
   };
 };

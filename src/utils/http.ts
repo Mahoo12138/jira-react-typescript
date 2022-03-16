@@ -6,27 +6,27 @@ import { useAuth } from "context/auth-context";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 interface Config extends RequestInit {
-  param?: object;
+  data?: object;
   token?: string;
 }
 export const http = async (
   endpoint: string,
-  { param, token, headers, ...customConfig }: Config = {}
+  { data, token, headers, ...customConfig }: Config = {}
 ) => {
   const config = {
     method: "GET",
     headers: {
       // TODO: 了解 Bearer
       Authorization: token ? `Bearer ${token}` : "",
-      "Content-Type": param ? "application/json" : "",
+      "Content-Type": data ? "application/json" : "",
     },
     ...customConfig,
   };
 
   if (config.method.toUpperCase() === "GET") {
-    endpoint += "?" + qs.stringify(param);
+    endpoint += "?" + qs.stringify(data);
   } else {
-    config.body = JSON.stringify(param || {});
+    config.body = JSON.stringify(data || {});
   }
   return window
     .fetch(`${apiUrl}/${endpoint}`, config)

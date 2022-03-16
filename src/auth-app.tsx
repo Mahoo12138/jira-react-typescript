@@ -6,14 +6,12 @@ import { ProjectListPage } from "pages/project-list";
 import { Dropdown, Menu, Button } from "antd";
 // import Logo from "assets/software-logo.svg";
 import { ReactComponent as Logo } from "assets/software-logo.svg";
-import { resetRoute, useDocumentTitle } from "utils";
+import { resetRoute } from "utils";
 import { Navigate, Route, Routes } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import ProjectPage from "pages/project";
 export const AuthenticateApp = () => {
   // const value: any = undefined;
-
-  useDocumentTitle("项目列表");
   return (
     <Container>
       {/* <Helmet>
