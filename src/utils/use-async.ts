@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useMountedRef } from "utils";
 
 interface State<D> {
   error: Error | null;
@@ -25,6 +26,7 @@ export const useAsync = <D>(
     ...defaultInitialState,
     ...initialState,
   });
+  const mountedRef = useMountedRef();
 
   const [retry, setRetry] = useState(() => () => {
     console.log("初始化的 retry");
@@ -64,23 +66,25 @@ export const useAsync = <D>(
         }
       };
     });
-    // const run = (promise: Promise<D>) => {
-    //   if (!promise || !promise.then) {
-    //     throw new Error("需要传入 Promise 类型参数");
-    //   }
-    //   console.log("run 运行 promise")
-    //   setRetry(()=>{
-    //     console.log("setretry 存储新的promise ")
-    //     return ()=>{
-    //       console.log(promise)
-    //       console.log("retry 运行")
-    //       run(promise)}
-    //   })
+
+    //   const run = (promise: Promise<D>) => {
+    //     if (!promise || !promise.then) {
+    //       throw new Error("需要传入 Promise 类型参数");
+    //     }
+    //     console.log("run 运行 promise")
+    // setRetry(()=>{
+    //   console.log("setretry 存储新的promise ")
+    //   return ()=>{
+    //     console.log(promise)
+    //     console.log("retry 运行")
+    //     run(promise)}
+    // })
+
     setState({ ...state, stat: "loading" });
     return promise
       .then((data) => {
         console.log("set 数据，页面更新");
-        setData(data);
+        if (mountedRef.current) setData(data);
         return data;
       })
       .catch((error) => {
