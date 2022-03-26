@@ -6,8 +6,11 @@ import { useDebounce, useDocumentTitle } from "../../utils";
 import { useProjects } from "utils/project";
 import { useUsers } from "utils/user";
 import { useProjectQueryParam } from "./utils";
+import { Row } from "components/lib";
 
-export const ProjectListPage = () => {
+export const ProjectListPage = (props: {
+  setProjectModalOpen: (isOpen: boolean) => void;
+}) => {
   useDocumentTitle("项目列表", false);
   // const [keys] = useState<("name" | "personId")[]>(["name","personId"])
   const [param, setParam] = useProjectQueryParam();
@@ -18,7 +21,12 @@ export const ProjectListPage = () => {
 
   return (
     <Container>
-      <h1>项目列表</h1>
+      <Row between={true}>
+        <h1>项目列表</h1>
+        <Button onClick={() => props.setProjectModalOpen(true)}>
+          创建项目
+        </Button>
+      </Row>
       {/* <Button onClick={retry}>Retry</Button> */}
       <SearchPanel param={param} setParam={setParam} users={users || []} />
 
@@ -30,6 +38,7 @@ export const ProjectListPage = () => {
         loading={isLoading}
         dataSource={data || []}
         users={users || []}
+        setProjectModalOpen={props.setProjectModalOpen}
       />
     </Container>
   );

@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Spin, Card, Typography } from "antd";
+import { Spin, Card, Typography, Button } from "antd";
 import { DevTools } from "jira-dev-tool";
 export const Row = styled.div<{
   gap?: number | boolean;
@@ -48,3 +48,7 @@ export const FullPageErrorFallback = ({ error }: { error: Error | null }) => (
     </Card>
   </FullPage>
 );
+
+export const ButtonNoPadding = styled(Button)`
+  padding: 0;
+`;
