@@ -1,70 +1,86 @@
-import { useCallback, useState } from "react";
+import { useCallback, useReducer, useState } from "react";
 
-export const useUndo = <T>(initialPresent: T) => {
-  const [state, setState] = useState<{
-    past: T[];
-    present: T;
-    futrue: T[];
-  }>({
-    past: [],
-    present: initialPresent,
-    futrue: [],
-  });
+type State<T> = {
+  past: T[];
+  present: T;
+  future: T[];
+};
+enum ActionType {
+  UNDO = "UNDO",
+  REDO = "REDO",
+  SET = "SET",
+  RESET = "RESET",
+}
+type Action<T> = {
+  newPresent?: T;
+  type: ActionType;
+};
+const undoReducer = <T>(state: State<T>, action: Action<T>) => {
+  const { past, present, future } = state;
+  const { type, newPresent } = action;
 
-  const canUndo = state.past.length !== 0;
-  const canRedo = state.futrue.length !== 0;
-
-  const undo = useCallback(() => {
-    // if(!canUndo)return
-    setState((currentState) => {
-      const { past, present, futrue } = currentState;
-      if (past.length === 0) return currentState;
+  switch (type) {
+    case ActionType.UNDO: {
+      if (past.length === 0) return state;
       const previous = past[past.length - 1];
       const newPast = past.slice(0, past.length - 1);
       return {
         past: newPast,
         present: previous,
-        futrue: [present, ...futrue],
+        future: [present, ...future],
       };
-    });
-  }, []);
-  const redo = useCallback(() => {
-    if (!canRedo) return;
-
-    setState((currentState) => {
-      const { past, present, futrue } = currentState;
-      const next = futrue[0];
-      const newFutrue = futrue.slice(1);
+    }
+    case ActionType.REDO: {
+      const next = future[0];
+      const newFutrue = future.slice(1);
 
       return {
         past: [...past, present],
         present: next,
-        futrue: newFutrue,
+        future: newFutrue,
       };
-    });
-  }, []);
-
-  const set = useCallback((newPresent: T) => {
-    setState((currentState) => {
-      const { past, present } = currentState;
+    }
+    case ActionType.SET: {
       if (newPresent === present) {
-        return currentState;
+        return state;
       }
       return {
         past: [...past, present],
         present: newPresent,
-        futrue: [],
+        future: [],
       };
-    });
-  }, []);
-  const reset = useCallback((newPresent: T) => {
-    setState((currentState) => {
+    }
+    case ActionType.RESET: {
       return {
         past: [],
         present: newPresent,
-        futrue: [],
+        future: [],
       };
-    });
+    }
+  }
+};
+export const useUndo = <T>(initialPresent: T) => {
+  const [state, dispatch] = useReducer(undoReducer, {
+    past: [],
+    present: initialPresent,
+    future: [],
+  } as State<T>);
+
+  const canUndo = state.past.length !== 0;
+  const canRedo = state.future.length !== 0;
+
+  const undo = useCallback(() => {
+    dispatch({ type: ActionType.UNDO });
+  }, []);
+  const redo = useCallback(() => {
+    dispatch({ type: ActionType.REDO });
+  }, []);
+
+  const set = useCallback((newPresent: T) => {
+    dispatch({ type: ActionType.SET, newPresent });
+  }, []);
+  const reset = useCallback((newPresent: T) => {
+    dispatch({ type: ActionType.RESET, newPresent });
   }, []);
   return [state, { set, reset, undo, redo, canRedo, canUndo }];
 };
