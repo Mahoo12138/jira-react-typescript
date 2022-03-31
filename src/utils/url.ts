@@ -3,12 +3,12 @@ import { URLSearchParamsInit, useSearchParams } from "react-router-dom";
 import { cleanObject } from "utils";
 
 /**
- * @description 返回页面URL中指定键的值
+ * @description 返回页面 URL中指定键的值
  * @param keys
  */
 export const useUrlQueryParam = <K extends string>(keys: K[]) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log("useUrlQueryParam");
+  // console.log("useUrlQueryParam");
   return [
     useMemo(
       () =>

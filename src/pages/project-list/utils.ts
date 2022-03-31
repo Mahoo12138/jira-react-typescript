@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useProject } from "utils/project";
 import { useUrlQueryParam } from "utils/url";
 
 export const useProjectQueryParam = () => {
@@ -13,12 +14,15 @@ export const useProjectQueryParam = () => {
 };
 
 export const useProjectModal = () => {
-  const [{ projectCreate }, setProjectCreate] = useUrlQueryParam([
-    "projectCreate",
-  ]);
+  const [{ projectCreate, editingProjectId }, setProjectParam] =
+    useUrlQueryParam(["projectCreate", "editingProjectId"]);
 
-  const open = () => setProjectCreate({ projectCreate: true });
-  const close = () => setProjectCreate({ projectCreate: undefined });
+  const { data: editingProject, isLoading } = useProject(+editingProjectId);
+
+  const open = () => setProjectParam({ projectCreate: true });
+  const close = () =>
+    setProjectParam({ projectCreate: undefined, editingProjectId: undefined });
+  const startEdit = (id: number) => setProjectParam({ editingProjectId: id });
 
   // 参数较少返回 tupple, 否则返回对象
   // return [
@@ -27,8 +31,11 @@ export const useProjectModal = () => {
   //   close
   // ] as const
   return {
-    projectCreate: projectCreate === "true",
+    projectModalOpen: projectCreate === "true" || Boolean(editingProject),
     open,
     close,
+    startEdit,
+    isLoading,
+    editingProject,
   };
 };

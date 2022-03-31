@@ -40,7 +40,7 @@ export const FullPageErrorFallback = ({ error }: { error: Error | null }) => (
   <FullPage>
     <DevTools />
     <Card>
-      <Typography.Text type="danger">{error?.message}</Typography.Text>
+      <ErrorBox error={error} />
       <br></br>
       <Typography.Text type="warning">
         未知错误，请刷新页面后重试！
@@ -52,3 +52,13 @@ export const FullPageErrorFallback = ({ error }: { error: Error | null }) => (
 export const ButtonNoPadding = styled(Button)`
   padding: 0;
 `;
+
+// 类型守卫
+const isError = (value: any): value is Error => value?.message;
+
+export const ErrorBox = ({ error }: { error: unknown }) => {
+  if (isError(error)) {
+    return <Typography.Text type="danger">{error.message}</Typography.Text>;
+  }
+  return null;
+};

@@ -1,18 +1,17 @@
 import styled from "@emotion/styled";
-import { Typography } from "antd";
 import SearchPanel from "./search-panel";
 import List from "./list";
 import { useDebounce, useDocumentTitle } from "../../utils";
 import { useProjects } from "utils/project";
 import { useUsers } from "utils/user";
 import { useProjectModal, useProjectQueryParam } from "./utils";
-import { ButtonNoPadding, Row } from "components/lib";
+import { ButtonNoPadding, ErrorBox, Row } from "components/lib";
 
 export const ProjectListPage = (props: { projectButton: JSX.Element }) => {
   useDocumentTitle("项目列表", false);
   // const [keys] = useState<("name" | "personId")[]>(["name","personId"])
   const [param, setParam] = useProjectQueryParam();
-  const { isLoading, error, data, retry } = useProjects(
+  const { isLoading, error, data /*retry*/ } = useProjects(
     useDebounce(param, 300)
   );
   const { data: users } = useUsers();
@@ -29,11 +28,12 @@ export const ProjectListPage = (props: { projectButton: JSX.Element }) => {
       {/* <Button onClick={retry}>Retry</Button> */}
       <SearchPanel param={param} setParam={setParam} users={users || []} />
 
-      {error ? (
+      {/* {error ? (
         <Typography.Text type="danger">{error.message}</Typography.Text>
-      ) : null}
+      ) : null} */}
+      <ErrorBox error={error} />
       <List
-        refresh={retry}
+        // refresh={retry}
         loading={isLoading}
         dataSource={data || []}
         users={users || []}
@@ -43,7 +43,7 @@ export const ProjectListPage = (props: { projectButton: JSX.Element }) => {
   );
 };
 
-ProjectListPage.whyDidYouRender = true;
+// ProjectListPage.whyDidYouRender = true;
 
 const Container = styled.div`
   padding: 3.2rem;

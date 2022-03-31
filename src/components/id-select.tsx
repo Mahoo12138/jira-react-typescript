@@ -5,8 +5,8 @@ type SelectProps = React.ComponentProps<typeof Select>;
 
 interface IdSelectProps
   extends Omit<SelectProps, "value" | "options" | "onChange"> {
-  value: Raw | undefined | null;
-  onChange: (value?: number) => void;
+  value?: Raw | undefined | null;
+  onChange?: (value?: number) => void;
   defaultOptionName?: string;
   options?: { name: string; id: number }[];
 }
@@ -24,7 +24,7 @@ export const IdSelect = (props: IdSelectProps) => {
   return (
     <Select
       value={options?.length ? toNumber(value) : 0}
-      onChange={(v) => onChange(toNumber(v))}
+      onChange={(v) => onChange?.(toNumber(v) || undefined)}
       {...restProps}
     >
       {defaultOptionName ? (
