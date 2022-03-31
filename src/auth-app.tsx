@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 // import { Helmet } from "react-helmet";
-import { Row } from "components/lib";
+import { ButtonNoPadding, Row } from "components/lib";
 import { useAuth } from "context/auth-context";
 import { ProjectListPage } from "pages/project-list";
 import { Dropdown, Menu, Button } from "antd";
@@ -10,11 +10,10 @@ import { resetRoute } from "utils";
 import { Navigate, Route, Routes } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import ProjectPage from "pages/project";
-import { useState } from "react";
 import { ProjectModal } from "pages/project/project-modal";
 import { ProjectPopover } from "pages/project/project-popover";
 export const AuthenticateApp = () => {
-  const [projectModalOpen, setProjectModalOpen] = useState(false);
+  // const [projectModalOpen, setProjectModalOpen] = useState(false);
   // const value: any = undefined;
   return (
     <Container>
@@ -22,38 +21,55 @@ export const AuthenticateApp = () => {
         <title>项目列表</title>
       </Helmet> */}
       {/* <div>{value.isError}</div> */}
-      <PageHeader setProjectModalOpen={setProjectModalOpen} />
+      <Router>
+        <PageHeader
+          projectButton={
+            <ButtonNoPadding
+              type="link"
+              // onClick={() => setProjectModalOpen(true)}
+            >
+              创建项目
+            </ButtonNoPadding>
+          }
+        />
 
-      {/* <Nav>Nav</Nav> */}
-      <Main>
-        {/* <ProjectListPage /> */}
-        <Router>
+        {/* <Nav>Nav</Nav> */}
+        <Main>
+          {/* <ProjectListPage /> */}
+
           <Routes>
             <Route
               path={"/projects"}
               element={
-                <ProjectListPage setProjectModalOpen={setProjectModalOpen} />
+                <ProjectListPage
+                  projectButton={
+                    <ButtonNoPadding
+                      type="link"
+                      // onClick={() => setProjectModalOpen(true)}
+                    >
+                      编辑
+                    </ButtonNoPadding>
+                  }
+                />
               }
             />
             <Route path={"/projects/:projectId/*"} element={<ProjectPage />} />
             <Route path="*" element={<Navigate to={"/projects"} />} />
           </Routes>
-        </Router>
-      </Main>
+        </Main>
 
-      <ProjectModal
-        projectModalOpen={projectModalOpen}
-        onClose={() => setProjectModalOpen(false)}
-      />
-      {/* <Aside>Aside</Aside> */}
-      {/* <Footer>footer</Footer> */}
+        <ProjectModal
+        // projectModalOpen={projectModalOpen}
+        // onClose={() => setProjectModalOpen(false)}
+        />
+        {/* <Aside>Aside</Aside> */}
+        {/* <Footer>footer</Footer> */}
+      </Router>
     </Container>
   );
 };
 
-const PageHeader = (props: {
-  setProjectModalOpen: (isOpen: boolean) => void;
-}) => {
+const PageHeader = (props: { projectButton: JSX.Element }) => {
   const { logout, user } = useAuth();
   return (
     <Header between={true} as={"header"}>
@@ -62,7 +78,7 @@ const PageHeader = (props: {
         <Button type="link" onClick={resetRoute} style={{ padding: 0 }}>
           <Logo width={"18rem"} color={"rgb(38,132,255)"} />
         </Button>
-        <ProjectPopover setProjectModalOpen={props.setProjectModalOpen} />
+        <ProjectPopover />
         <h3>用户</h3>
       </HeaderLeft>
       <HeaderRight>

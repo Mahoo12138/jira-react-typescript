@@ -4,6 +4,7 @@ import { Pin } from "components/pin";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { useEditProject } from "utils/project";
+import { useProjectModal } from "./utils";
 
 export interface Project {
   id: number;
@@ -23,7 +24,6 @@ export interface User {
 interface ListProps extends TableProps<Project> {
   users: User[];
   refresh: () => void;
-  setProjectModalOpen: (isOpen: boolean) => void;
 }
 
 const List = ({ users, ...props }: ListProps) => {
@@ -32,6 +32,8 @@ const List = ({ users, ...props }: ListProps) => {
     mutate({ id, pin }).then(() => {
       props.refresh();
     });
+
+  const { open } = useProjectModal();
   return (
     <Table
       rowKey={"id"}
@@ -96,10 +98,7 @@ const List = ({ users, ...props }: ListProps) => {
                 overlay={
                   <Menu>
                     <Menu.Item>
-                      <ButtonNoPadding
-                        type={"link"}
-                        onClick={() => props.setProjectModalOpen(true)}
-                      >
+                      <ButtonNoPadding onClick={open} type={"link"}>
                         编辑
                       </ButtonNoPadding>
                     </Menu.Item>

@@ -1,16 +1,14 @@
 import styled from "@emotion/styled";
-import { Button, Typography } from "antd";
+import { Typography } from "antd";
 import SearchPanel from "./search-panel";
 import List from "./list";
 import { useDebounce, useDocumentTitle } from "../../utils";
 import { useProjects } from "utils/project";
 import { useUsers } from "utils/user";
-import { useProjectQueryParam } from "./utils";
-import { Row } from "components/lib";
+import { useProjectModal, useProjectQueryParam } from "./utils";
+import { ButtonNoPadding, Row } from "components/lib";
 
-export const ProjectListPage = (props: {
-  setProjectModalOpen: (isOpen: boolean) => void;
-}) => {
+export const ProjectListPage = (props: { projectButton: JSX.Element }) => {
   useDocumentTitle("项目列表", false);
   // const [keys] = useState<("name" | "personId")[]>(["name","personId"])
   const [param, setParam] = useProjectQueryParam();
@@ -18,14 +16,15 @@ export const ProjectListPage = (props: {
     useDebounce(param, 300)
   );
   const { data: users } = useUsers();
+  const { open } = useProjectModal();
 
   return (
     <Container>
       <Row between={true}>
         <h1>项目列表</h1>
-        <Button onClick={() => props.setProjectModalOpen(true)}>
+        <ButtonNoPadding onClick={open} type={"link"}>
           创建项目
-        </Button>
+        </ButtonNoPadding>
       </Row>
       {/* <Button onClick={retry}>Retry</Button> */}
       <SearchPanel param={param} setParam={setParam} users={users || []} />
@@ -38,7 +37,7 @@ export const ProjectListPage = (props: {
         loading={isLoading}
         dataSource={data || []}
         users={users || []}
-        setProjectModalOpen={props.setProjectModalOpen}
+        // projectButton={props.projectButton}
       />
     </Container>
   );

@@ -24,7 +24,7 @@ export const useUrlQueryParam = <K extends string>(keys: K[]) => {
         ...params,
       });
       // 当 personId 为 0，无意义，可直接删除
-      if (o.personId === 0) delete o.personId;
+      // if (o.personId === 0) delete o.personId;
       setSearchParams(o as URLSearchParamsInit);
     },
   ] as const;
