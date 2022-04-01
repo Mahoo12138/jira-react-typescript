@@ -13,6 +13,11 @@ export const useProjectQueryParam = () => {
   ] as const;
 };
 
+export const useProjectQueryKey = () => {
+  const [param] = useProjectQueryParam();
+  return ["projects", param];
+};
+
 export const useProjectModal = () => {
   const [{ projectCreate, editingProjectId }, setProjectParam] =
     useUrlQueryParam(["projectCreate", "editingProjectId"]);
@@ -24,12 +29,6 @@ export const useProjectModal = () => {
     setProjectParam({ projectCreate: undefined, editingProjectId: undefined });
   const startEdit = (id: number) => setProjectParam({ editingProjectId: id });
 
-  // 参数较少返回 tupple, 否则返回对象
-  // return [
-  //   projectCreate === 'true',
-  //   open,
-  //   close
-  // ] as const
   return {
     projectModalOpen: projectCreate === "true" || Boolean(editingProject),
     open,
