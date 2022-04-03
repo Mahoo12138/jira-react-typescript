@@ -30,7 +30,7 @@ export const useKanbansQueryKey = () => ["kanbans", useKanbanSearchParams()];
 /**
  * @description 返回当前 url 中的项目的 id
  */
-export const useTasksSearchParams = () => {
+export const useTaskSearchParams = () => {
   const [param, setParam] = useUrlQueryParam([
     "name",
     "typeId",
@@ -52,4 +52,4 @@ export const useTasksSearchParams = () => {
 /**
  * @description 返回查询看板数据的 querykey
  */
-export const useTasksQueryKey = () => ["tasks", useTasksSearchParams()];
+export const useTasksQueryKey = () => ["tasks", useTaskSearchParams()];

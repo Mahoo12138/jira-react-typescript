@@ -105,7 +105,7 @@ const Container = styled.div`
   display: grid;
   /* grid-template-areas: "header header header" "nav main aside" "footer footer footer"; */
   /* grid-template-columns: 20rem 1fr 20rem; */
-  grid-template-rows: 6rem 1fr 6rem;
+  grid-template-rows: 6rem 1fr;
   height: 100vh;
 `;
 
@@ -128,6 +128,8 @@ const HeaderLeft = styled(Row)`
 const HeaderRight = styled.div``;
 
 const Main = styled.main`
+  display: flex;
+  overflow: hidden;
   /* grid-area: main; */
 `;
 // const Nav = styled.nav`
