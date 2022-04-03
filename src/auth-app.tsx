@@ -136,6 +136,6 @@ const Main = styled.main`
 // const Aside = styled.aside`
 //   grid-area: aside;
 // `;
-const Footer = styled.footer`
-  /* grid-area: footer; */
-`;
+// const Footer = styled.footer`
+//   /* grid-area: footer; */
+// `;

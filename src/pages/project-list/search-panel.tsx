@@ -1,8 +1,9 @@
 /* @jsxImportSource @emotion/react */
-import React from "react";
-import { Input, Select, Form } from "antd";
 
-import { Project, User } from "./list";
+import { Input, Form } from "antd";
+
+import { User } from "../../types/user";
+import { Project } from "../../types/project";
 import { UserSelect } from "components/user-select";
 
 interface SearchPanelProps {

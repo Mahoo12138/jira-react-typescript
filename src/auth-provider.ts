@@ -1,6 +1,6 @@
 // 操作 JWT 的 Token， 真实开发过程中往往会使用第三方或自研的SDK，则不需要该文件
 
-import { User } from "./pages/project-list/list";
+import { User } from "./types/user";
 
 export const localStorageKey = "__auth_provider_token__";
 

@@ -1,6 +1,5 @@
-import { Project } from "pages/project-list/list";
-import { useProjectQueryParam } from "pages/project-list/utils";
-import { QueryKey, useMutation, useQuery, useQueryClient } from "react-query";
+import { Project } from "types/project";
+import { QueryKey, useMutation, useQuery } from "react-query";
 import { cleanObject } from "utils";
 import { useHttp } from "./http";
 import {

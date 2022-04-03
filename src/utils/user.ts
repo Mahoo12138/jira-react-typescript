@@ -1,4 +1,4 @@
-import { User } from "pages/project-list/list";
+import { User } from "types/user";
 import { useMount } from "utils";
 import { useHttp } from "./http";
 import { useAsync } from "./use-async";
