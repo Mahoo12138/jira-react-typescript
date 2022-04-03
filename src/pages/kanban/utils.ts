@@ -1,6 +1,8 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useLocation } from "react-router";
+import { useDebounce } from "utils";
 import { useProject } from "utils/project";
+import { useTask } from "utils/task";
 import { useUrlQueryParam } from "utils/url";
 
 /**
@@ -38,18 +40,46 @@ export const useTaskSearchParams = () => {
     "tagId",
   ]);
   const projectId = useProjectIdInUrl();
+  const debouncedName = useDebounce(param.name, 500);
   return useMemo(
     () => ({
       projectId,
       typeId: +param.typeId || undefined,
       processorId: +param.processorId || undefined,
       tagId: +param.tagId || undefined,
-      name: param.name,
+      name: debouncedName,
     }),
-    [projectId, param]
+    [projectId, param, debouncedName]
   );
 };
 /**
  * @description 返回查询看板数据的 querykey
  */
 export const useTasksQueryKey = () => ["tasks", useTaskSearchParams()];
+
+export const useTaskModal = () => {
+  const [{ editingTaskId }, setEditingTaskId] = useUrlQueryParam([
+    "editingTaskId",
+  ]);
+  const { data: editingTask, isLoading } = useTask(+editingTaskId);
+
+  const startEdit = useCallback(
+    (id: number) => {
+      setEditingTaskId({ editingTaskId: id });
+    },
+    [setEditingTaskId]
+  );
+
+  const close = useCallback(
+    () => setEditingTaskId({ editingTaskId: "" }),
+    [setEditingTaskId]
+  );
+
+  return {
+    editingTaskId,
+    editingTask,
+    startEdit,
+    isLoading,
+    close,
+  };
+};
