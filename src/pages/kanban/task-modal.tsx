@@ -66,13 +66,14 @@ export const TaskModal = () => {
             删除
           </Button>
         ) : null,
-        <Button type="primary" loading={editLoading} onClick={onOk}>
+        <Button key={"ok"} type="primary" loading={editLoading} onClick={onOk}>
           确认
         </Button>,
       ]}
     >
       <Form {...layout} form={form} initialValues={editingTask}>
         <Form.Item
+          key={"name"}
           label={"任务名"}
           name={"name"}
           rules={[{ required: true, message: "请输入任务名" }]}
@@ -80,6 +81,7 @@ export const TaskModal = () => {
           <Input />
         </Form.Item>
         <Form.Item
+          key={"processor"}
           label={"经办人"}
           name={"processorId"}
           rules={[{ required: true, message: "请输入经办人" }]}
@@ -87,6 +89,7 @@ export const TaskModal = () => {
           <UserSelect defaultOptionName="经办人" />
         </Form.Item>
         <Form.Item
+          key={"label"}
           label={"类型"}
           name={"typeId"}
           rules={[{ required: true, message: "请输入任务类型" }]}
@@ -94,7 +97,6 @@ export const TaskModal = () => {
           <TaskTypeSelect defaultOptionName="类型" />
         </Form.Item>
       </Form>
-      <div></div>
     </Modal>
   );
 };

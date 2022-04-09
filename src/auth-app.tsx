@@ -130,6 +130,8 @@ const HeaderRight = styled.div``;
 const Main = styled.main`
   display: flex;
   overflow: hidden;
+  /* width: 100%; */
+  /* flex-direction: column; */
   /* grid-area: main; */
 `;
 // const Nav = styled.nav`

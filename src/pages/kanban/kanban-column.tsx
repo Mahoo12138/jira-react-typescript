@@ -16,6 +16,8 @@ import { CreateTask } from "./craete-task";
 import { Task } from "types/task";
 import { useDeleteKanban } from "utils/kanban";
 import { Row } from "components/lib";
+import React from "react";
+import { Drag, Drop, DropChild } from "components/drag-and-drop";
 
 const TaskTypeIcon = ({ id }: { id: number }) => {
   const { data: taskTypes } = useTaskTypes();
@@ -64,7 +66,7 @@ const More = ({ kanban }: { kanban: Kanban }) => {
   };
   const overlay = () => (
     <Menu>
-      <Menu.Item key={""}></Menu.Item>
+      {/* <Menu.Item key={""}></Menu.Item> */}
       <Menu.Item key={"delete"} onClick={startDelete}>
         删除
       </Menu.Item>
@@ -92,24 +94,35 @@ const TaskCard = ({ task }: { task: Task }) => {
   );
 };
 
-export const KanBanColumn = ({ kanban }: { kanban: Kanban }) => {
+export const KanBanColumn = React.forwardRef<
+  HTMLDivElement,
+  { kanban: Kanban }
+>(({ kanban, ...props }, ref) => {
   const { data: allTasks } = useTasks(useTaskSearchParams());
   const tasks = allTasks?.filter((task) => task.kanbanId === kanban.id);
 
   return (
-    <KanbanContainer>
+    <KanbanContainer {...props} ref={ref}>
       <Row between={true}>
         <h3>{kanban.name}</h3> <More kanban={kanban} />
       </Row>
       <TasksContainer>
-        {tasks?.map((task) => (
-          <TaskCard task={task} key={task.id} />
-        ))}
+        <Drop type="ROW" droppableId={kanban.id + ""} direction="vertical">
+          <DropChild style={{ minHeight: "5px" }}>
+            {tasks?.map((task, index) => (
+              <Drag draggableId={task.id + ""} index={index} key={task.id}>
+                <div>
+                  <TaskCard task={task} />
+                </div>
+              </Drag>
+            ))}
+          </DropChild>
+        </Drop>
         <CreateTask kanbanId={kanban.id} />
       </TasksContainer>
     </KanbanContainer>
   );
-};
+});
 
 export const KanbanContainer = styled.div`
   min-width: 27rem;

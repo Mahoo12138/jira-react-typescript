@@ -19,6 +19,7 @@
     "jira-dev-tool": "1.6.59",
     "qs": "^6.10.2",
     "react": "^17.0.2",
+    "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
     "react-query": "^3.34.16",
@@ -58,6 +59,7 @@
   "devDependencies": {
     "@commitlint/cli": "^16.0.1",
     "@commitlint/config-conventional": "^16.0.0",
+    "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-helmet": "^6.1.5",
     "@welldone-software/why-did-you-render": "^6.2.3",
     "eslint-config-prettier": "^8.3.0",

@@ -47,4 +47,7 @@ export const ProjectListPage = (props: { projectButton: JSX.Element }) => {
 
 const Container = styled.div`
   padding: 3.2rem;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
 `;
