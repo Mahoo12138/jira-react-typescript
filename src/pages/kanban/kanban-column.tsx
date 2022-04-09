@@ -1,12 +1,7 @@
 import { Kanban } from "types/kanban";
 import { useTasks } from "utils/task";
 import { useTaskTypes } from "utils/task-type";
-import {
-  useKanbansQueryKey,
-  useTaskModal,
-  useTaskSearchParams,
-  useTasksQueryKey,
-} from "./utils";
+import { useKanbansQueryKey, useTaskModal, useTaskSearchParams } from "./utils";
 
 import bugIcon from "assets/bug.svg";
 import taskIcon from "assets/task.svg";
