@@ -12,6 +12,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import ProjectPage from "pages/project";
 import { ProjectModal } from "pages/project/project-modal";
 import { ProjectPopover } from "pages/project/project-popover";
+import { UserPopover } from "components/user-popover";
 export const AuthenticateApp = () => {
   // const [projectModalOpen, setProjectModalOpen] = useState(false);
   // const value: any = undefined;
@@ -79,7 +80,7 @@ const PageHeader = (props: { projectButton: JSX.Element }) => {
           <Logo width={"18rem"} color={"rgb(38,132,255)"} />
         </Button>
         <ProjectPopover />
-        <h3>用户</h3>
+        <UserPopover />
       </HeaderLeft>
       <HeaderRight>
         {/* <button onClick={logout}>登出</button> */}
